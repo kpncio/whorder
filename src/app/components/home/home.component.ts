@@ -2,32 +2,16 @@ import { FetchService } from 'src/app/services/fetch.service';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-// export interface Geolocation {
-//   provided: {
-//     version: string;
-//     address: string;
-//     ray: string;
-//   };
-//   found: {
-//     zone: string;
-//     country: string;
-//     region: string;
-//     city: string;
-//     zip: string;
-//     latitude: string;
-//     longitude: string;
-//     cidr: string;
-//     asn: string;
-//     isp: string;
-//   };
-//   proxy: {
-//     detected: boolean;
-//     provider: string;
-//     type: string;
-//     usage: string;
-//     threat: string;
-//   };
-// }
+export interface IWhorder {
+  meta: {
+    name: string;
+    epoch: string;
+    message: string;
+  };
+  data: {
+    [content: string]: number;
+  };
+}
 
 @Component({
   selector: 'app-home',
@@ -35,12 +19,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  // response: Geolocation | null = null;
-  // provider: string = 'GeoIP';
-  // loading: boolean = false;
-  // success: boolean = false;
-  // message: string = '';
-  // ip: string = '';
+  response: IWhorder | null = null;
+  loading: boolean = false;
+  success: boolean = false;
+  message: string = '';
 
   constructor(private router: Router, private ngZone: NgZone, private fetch: FetchService) {}
 
@@ -51,6 +33,10 @@ export class HomeComponent implements OnInit {
 
   routerLink(route: any[]): void {
     this.ngZone.run(() => this.router.navigate(route)).then();
+  }
+
+  clicked(content: string): void {
+
   }
 
   // provided(): void {

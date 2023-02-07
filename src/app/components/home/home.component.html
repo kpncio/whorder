@@ -8,6 +8,95 @@
 <main class="container">
   <h2 class="nosel">Watch Order:</h2>
   <h3 class="nosel">⤷ <a (click)="routerLink(['/information'])">See more</a>...</h3>
-
-  <div style="text-align: center;"><h2>[WIP]: This is an ongoing project...</h2></div>
+  <div class="box">
+    <small>Toggle Content:</small>
+    <div class="toggle"
+      (click)="clicked('classic_seasons')"
+      [ngClass]="{'toggled': including.includes('classic_seasons')}">
+      Classic Seasons
+    </div>
+    <div class="toggle"
+      (click)="clicked('modern_seasons')"
+      [ngClass]="{'toggled': including.includes('modern_seasons')}">
+      Modern Seasons
+    </div>
+    <div class="toggle"
+      (click)="clicked('classic_movies')"
+      [ngClass]="{'toggled': including.includes('classic_movies')}">
+      Classic Movies
+    </div>
+    <div class="toggle"
+      (click)="clicked('classic_specials')"
+      [ngClass]="{'toggled': including.includes('classic_specials')}">
+      Classic Specials
+    </div>
+    <div class="toggle"
+      (click)="clicked('k9_and_company')"
+      [ngClass]="{'toggled': including.includes('k9_and_company')}">
+      K-9 and Company
+    </div>
+    <div class="toggle"
+      (click)="clicked('real_time')"
+      [ngClass]="{'toggled': including.includes('real_time')}">
+      Real Time
+    </div>
+    <div class="toggle"
+      (click)="clicked('crossover')"
+      [ngClass]="{'toggled': including.includes('crossover')}">
+      Crossovers
+    </div>
+    <div class="toggle"
+      (click)="clicked('the_movie')"
+      [ngClass]="{'toggled': including.includes('the_movie')}">
+      The Movie
+    </div>
+    <div class="toggle"
+      (click)="clicked('intermediary_specials')"
+      [ngClass]="{'toggled': including.includes('intermediary_specials')}">
+      Intermediary Specials
+    </div>
+    <div class="toggle"
+      (click)="clicked('standalone_special')"
+      [ngClass]="{'toggled': including.includes('standalone_special')}">
+      Standalone Specials
+    </div>
+    <div class="toggle"
+      (click)="clicked('prequels')"
+      [ngClass]="{'toggled': including.includes('prequels')}">
+      Prequels
+    </div>
+    <div class="toggle"
+      (click)="clicked('minisodes')"
+      [ngClass]="{'toggled': including.includes('minisodes')}">
+      Minisodes
+    </div>
+    <div class="toggle"
+      (click)="clicked('torchwood')"
+      [ngClass]="{'toggled': including.includes('torchwood')}">
+      Torchwood
+    </div>
+    <div class="toggle"
+      (click)="clicked('the_sarah_jane_adventures')"
+      [ngClass]="{'toggled': including.includes('the_sarah_jane_adventures')}">
+      The Sarah Jane Adventures
+    </div>
+    <div class="toggle"
+      (click)="clicked('dvd_extras')"
+      [ngClass]="{'toggled': including.includes('dvd_extras')}">
+      DVD Extras
+    </div>
+    <div class="toggle"
+      (click)="clicked('class')"
+      [ngClass]="{'toggled': including.includes('class')}">
+      Class
+    </div>
+    <div class="toggle"
+      (click)="clicked('redacted')"
+      [ngClass]="{'toggled': including.includes('redacted')}">
+      Redacted
+    </div>
+  </div>
+  <div class="box">
+    <small>Your List:</small>
+  </div>
 </main>

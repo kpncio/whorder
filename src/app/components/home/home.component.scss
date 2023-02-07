@@ -7,6 +7,16 @@ h1 {
   }
 }
 
+.box {
+  width: 100%;
+  padding: 10px;
+  max-width: 1200px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 0 auto 20px auto;
+  border: solid $light 1px;
+}
+
 // .box {
 //   width: 60%;
 //   margin: 0 auto;
