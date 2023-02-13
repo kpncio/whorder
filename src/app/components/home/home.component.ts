@@ -50,12 +50,17 @@ export class HomeComponent implements OnInit {
   success: boolean = false;
   watched: string[] = [];
   message: string = '';
+  unique: string = '';
   arrayed: any[] = [];
 
   constructor(private router: Router, private ngZone: NgZone, private fetch: FetchService) {}
 
   ngOnInit(): void {
-    this.retrieval();
+    if (localStorage.getItem('unique') != null) {
+      this.unique = localStorage.getItem('unique')!;
+
+      this.retrieval('https://api.whorder.com/?operation=read&list=' + this.unique);
+    }
   }
 
   routerLink(route: any[]): void {
@@ -70,7 +75,9 @@ export class HomeComponent implements OnInit {
       this.local!.meta.visible.push(content);
     }
 
-    this.retrieval();
+    this.arrayer();
+
+    this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content);
   }
 
   watcher(content: string = 'Close'): void {
@@ -130,59 +137,66 @@ export class HomeComponent implements OnInit {
   viewer(content: string): void {
     this.local!.data[content].status = this.local!.data[content].status == 2 ? 0 : this.local!.data[content].status + 1;
 
-    this.retrieval();
+    this.arrayer();
+
+    this.retrieval('https://api.whorder.com/?operation=watched&list=' + this.unique + '&title=' + content + '&status=' + this.local!.data[content].status);
   }
 
-  // provided(): void {
-  //   this.provider = this.provider == 'GeoIP' ? 'IP2Location' : 'GeoIP';
-  //   this.retrieval(this.provider == 'GeoIP' ? 'https://app.kpnc.io/geolocater/cloud/' : 'https://app.kpnc.io/geolocater/local/');
-  // }
+  changed(control: any): void {
+    this.unique = control.value;
+  }
 
-  // changed(control: any): void {
-  //   this.ip = control.value;
-  // }
+  loader(): void {
+    this.retrieval('https://api.whorder.com/?operation=read&list=' + this.unique);
+  }
 
-  // clicked(): void {
-  //   this.provider = 'IP2Location';
-  //   this.retrieval(`https://app.kpnc.io/geolocater/local/?ip=${this.ip}`);
-  // }
+  creator(): void {
+    this.retrieval('https://api.whorder.com/?operation=create');
+  }
 
-  retrieval(url?: string): void {
-  //   TODO: Sync Settings
-  //   TODO: Retrieve Settings
+  retrieval(url: string): void {
+    let time = performance.now()
 
-  //   let time = performance.now()
+    this.remote = null;
+    this.loading = true;
+    this.message = '';
 
-  //   this.response = null;
-  //   this.loading = true;
-  //   this.message = '';
+    this.fetch.request(url).subscribe((response: IWhorder) => {
+      this.loading = false;
 
-  //   this.fetch.request(url).subscribe((response: Geolocation) => {
-  //     this.loading = false;
+      if (response.meta.epoch == 0) {
+        this.success = false;
+        this.message = `${response.meta.unique} (${Math.round(performance.now() - time)}ms)...`;
+      } else if (response.meta.epoch == 1) {
+        this.success = true;
+        this.message = `${response.meta.unique} (${Math.round(performance.now() - time)}ms)...`;
+      } else {
+        localStorage.setItem('unique', response.meta.unique);
+        
+        this.remote = response;
+        this.local = response;
 
-  //     this.response = response;
-
-  //     if (response.provided.version != '0') {
-  //       this.success = true;
-  //       this.message = `Data retrieved successfully (${Math.round(performance.now() - time)}ms)...`
-  //     } else {
-  //       this.success = false;
-  //       this.message = 'Error: Invalid IP address inputted...'
-  //     }
-
-      this.arrayed = [];
-
-      for (let key in this.local!.data) {
-        const value = this.local!.data[key];
-
-        if (this.local!.meta.visible.includes(value.type)) {
-          this.arrayed.push([key, value.type, value.status]);
-        }
+        this.success = true;
+        this.message = `List retrieved (${Math.round(performance.now() - time)}ms)...`;
       }
-  //   }, _ => {
-  //     this.loading = false;
-  //     this.success = false;
-  //     this.message = 'Error: Unknown error, try again...'
-  //   });
+
+      this.arrayer();
+    }, _ => {
+      this.loading = false;
+      this.success = false;
+      this.message = 'Unknown error, try again...';
+    });
+  }
+
+  arrayer(): void {
+    this.arrayed = [];
+
+    for (let key in this.local!.data) {
+      const value = this.local!.data[key];
+
+      if (this.local!.meta.visible.includes(value.type)) {
+        this.arrayed.push([key, value.type, value.status]);
+      }
+    }
   }
 }

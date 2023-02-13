@@ -14,7 +14,7 @@ async function handleRequest(request, epoch) {
 	const { searchParams } = new URL(request.url);
 
   	if (searchParams.get('operation') == null) {
-		return new Response(message(true, 'No operator included...'), respond);
+		return new Response(message(true, 'No operator included'), respond);
 	}
 
 	switch (searchParams.get('operation')) {
@@ -1098,29 +1098,29 @@ async function handleRequest(request, epoch) {
 			}
 		case 'read':
 			if (searchParams.get('list') == null) {
-				return new Response(message(true, 'No list ID included...'), respond);
+				return new Response(message(true, 'No list ID included'), respond);
 			}
 
 			const data = await kv.get(searchParams.get('list'));
 
 			if (data === null) {
-				return new Response(message(true, 'List ID does not exist...'), respond);
+				return new Response(message(true, 'List ID does not exist'), respond);
 			}
 
 			return new Response(data, respond);
 		case 'visible':
 			if (searchParams.get('list') == null) {
-				return new Response(message(true, 'No list ID included...'), respond);
+				return new Response(message(true, 'No list ID included'), respond);
 			}
 
 			if (searchParams.get('type') == null) {
-				return new Response(message(true, 'No type ID included...'), respond);
+				return new Response(message(true, 'No type ID included'), respond);
 			}
 
 			let visible = JSON.parse(await kv.get(searchParams.get('list')));
 
 			if (visible === null) {
-				return new Response(message(true, 'List ID does not exist...'), respond);
+				return new Response(message(true, 'List ID does not exist'), respond);
 			}
 
 			if (visible.meta.visible.includes(searchParams.get('type'))) {
@@ -1132,24 +1132,24 @@ async function handleRequest(request, epoch) {
 
 			await kv.put(searchParams.get('list'), JSON.stringify(visible));
 
-			return new Response(message(false, 'Visible content updated...'), respond);
+			return new Response(message(false, 'Visible content updated'), respond);
 		case 'watched':
 			if (searchParams.get('list') == null) {
-				return new Response(message(true, 'No list ID included...'), respond);
+				return new Response(message(true, 'No list ID included'), respond);
 			}
 
 			if (searchParams.get('title') == null) {
-				return new Response(message(true, 'No title included...'), respond);
+				return new Response(message(true, 'No title included'), respond);
 			}
 
 			if (searchParams.get('status') == null) {
-				return new Response(message(true, 'No status number included...'), respond);
+				return new Response(message(true, 'No status number included'), respond);
 			}
 
 			let watched = JSON.parse(await kv.get(searchParams.get('list')));
 
 			if (watched === null) {
-				return new Response(message(true, 'List ID does not exist...'), respond);
+				return new Response(message(true, 'List ID does not exist'), respond);
 			}
 
 			watched.data[searchParams.get('title')] = {
@@ -1159,9 +1159,9 @@ async function handleRequest(request, epoch) {
 
 			await kv.put(searchParams.get('list'), JSON.stringify(watched));
 
-			return new Response(message(false, 'Viewing status updated...'), respond);
+			return new Response(message(false, 'Viewing status updated'), respond);
 		default:
-			return new Response(message(true, 'Invalid operator included...'), respond);
+			return new Response(message(true, 'Invalid operator included'), respond);
 	}
 }
 
