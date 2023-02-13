@@ -1,0 +1,8 @@
+name = "whorder"
+main = "index.js"
+compatibility_date = "2023-02-12"
+
+[[kv_namespaces]]
+  binding = "kv"
+  id = "7d1267126f034a58be1cae068e5a2b18"
+  preview_id = "7d1267126f034a58be1cae068e5a2b18"

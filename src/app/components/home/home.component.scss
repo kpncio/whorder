@@ -225,6 +225,69 @@ table {
   }
 }
 
+.shade {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.60) 100%);
+}
+
+.modal {
+  top: 40px;
+  left: 50%;
+  padding: 20px;
+  position: fixed;
+  text-align: left;
+  max-width: 1200px;
+  border-radius: 10px;
+  background-color: $dark;
+  width: calc(100% - 20px);
+  margin: 0 auto 20px auto;
+  border: solid $light 1px;
+  transform: translateX(-50%);
+
+  h2 {
+    text-align: center;
+  }
+
+  strong {
+    text-decoration: underline;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline dotted;
+    }
+  }
+
+  button {
+    top: 20px;
+    right: 20px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    color: $white;
+    font-size: 15px;
+    transition: 250ms;
+    border-radius: 5px;
+    text-align: center;
+    position: absolute;
+    vertical-align: middle;
+    background-color: $red;
+
+    &:hover {
+      color: $black;
+      transition: 250ms;
+      background-color: $white;
+    }
+  }
+}
+
 // .box {
 //   width: 60%;
 //   margin: 0 auto;
