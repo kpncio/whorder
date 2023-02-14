@@ -189,6 +189,10 @@ h1 {
   border: solid $light 1px;
 }
 
+.decoy {
+  filter: brightness(0.5);
+}
+
 .toggle {
   margin: 5px;
   padding: 3px;
@@ -419,13 +423,10 @@ table {
     text-align: center;
   }
 
-  strong {
-    text-decoration: underline;
-  }
-
   a {
     color: $blue;
     text-decoration: none;
+    text-underline-offset: 0.25rem;
 
     &:hover {
       text-decoration: underline dotted;
@@ -447,6 +448,56 @@ table {
     vertical-align: middle;
     background-color: $red;
 
+    &:hover {
+      color: $black;
+      transition: 250ms;
+      background-color: $white;
+    }
+  }
+}
+
+.close {
+  left: 20px;
+  bottom: 20px;
+  border: none;
+  color: $white;
+  font-size: 18px;
+  position: fixed;
+  transition: 250ms;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: $red;
+
+  &:hover {
+    color: $black;
+    transition: 250ms;
+    background-color: $white;
+  }
+}
+
+.danger {
+  padding: 0;
+  border-color: $red;
+
+  h2 {
+    margin: 10px;
+  }
+
+  .delete {
+    width: 90%;
+    border: none;
+    color: $white;
+    padding: 10.5px;
+    font-size: 20px;
+    max-width: 300px;
+    transition: 250ms;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: $red;
+  
     &:hover {
       color: $black;
       transition: 250ms;

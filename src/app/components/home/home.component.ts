@@ -68,16 +68,22 @@ export class HomeComponent implements OnInit {
   }
 
   toggler(content: string): void {
-    if (this.local!.meta.visible.includes(content)) {
-      const index = this.local!.meta.visible.indexOf(content);
-      this.local!.meta.visible.splice(index, 1);
-    } else {
-      this.local!.meta.visible.push(content);
+    if (!this.loading) {
+      if (this.local!.meta.visible.includes(content)) {
+        const index = this.local!.meta.visible.indexOf(content);
+        this.local!.meta.visible.splice(index, 1);
+  
+        
+        this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content + '&state=disable');
+      } else {
+        this.local!.meta.visible.push(content);
+  
+        
+        this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content + '&state=enable');
+      }
+  
+      this.arrayer();
     }
-
-    this.arrayer();
-
-    this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content);
   }
 
   watcher(content: string = 'Close'): void {
@@ -154,6 +160,22 @@ export class HomeComponent implements OnInit {
     this.retrieval('https://api.whorder.com/?operation=create');
   }
 
+  close(reload: boolean = true): void {
+    localStorage.removeItem('unique');
+    localStorage.clear();
+
+    if (reload) { location.reload(); }
+  }
+
+  delete(): void {
+    this.retrieval('https://api.whorder.com/?operation=delete&list=' + this.unique);
+
+    localStorage.removeItem('unique');
+    localStorage.clear();
+
+    location.reload();
+  }
+
   retrieval(url: string): void {
     let time = performance.now()
 
@@ -161,12 +183,16 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.message = '';
 
-    this.fetch.request(url).subscribe((response: IWhorder) => {
+    const scrambled = url + '&random=' + Math.random().toString(36).substr(2, 5).split('').map(c => Math.random() < 0.5 ? c.toUpperCase() : c).join('');
+
+    this.fetch.request(scrambled).subscribe((response: IWhorder) => {
       this.loading = false;
 
       if (response.meta.epoch == 0) {
         this.success = false;
         this.message = `${response.meta.unique} (${Math.round(performance.now() - time)}ms)...`;
+
+        if (response.meta.unique == 'List ID does not exist') { this.close(false); }
       } else if (response.meta.epoch == 1) {
         this.success = true;
         this.message = `${response.meta.unique} (${Math.round(performance.now() - time)}ms)...`;

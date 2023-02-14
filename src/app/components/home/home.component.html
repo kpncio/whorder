@@ -11,7 +11,7 @@
   
   <p class="message" [ngClass]="{'fail': !success, 'succ': success}" *ngIf="message">{{message}}</p>
 
-  <div style="margin: 18px;" *ngIf="loading">
+  <div style="margin: 34.5px;" *ngIf="loading">
     <app-loader></app-loader>
   </div>
 
@@ -25,14 +25,14 @@
   </div>
 
   <div *ngIf="local != null">
-    <h2 class="nosel title">Toggle Tags:</h2>
-    <div class="box nosel" style="padding: 5px;">
+    <h2 class="nosel title" [ngClass]="{'decoy': loading}">Toggle Tags:</h2>
+    <div class="box nosel" style="padding: 5px;" [ngClass]="{'decoy': loading}">
       <div class="toggle" *ngFor="let type of types" (click)="toggler(type[0])"
         [ngClass]="{'toggled': local.meta.visible.includes(type[0])}">
         {{type[1]}}
       </div>
     </div>
-  
+
     <h2 class="nosel title">Your List:</h2>
     <div class="box" *ngIf="arrayed != []">
       <table>
@@ -57,6 +57,11 @@
         </tbody>
       </table>
     </div>
+
+    <div class="box nosel danger">
+      <h2>Danger:</h2>
+      <button class="delete" (click)="delete()">Delete List</button>
+    </div>
   
     <div class="shade" (click)="watcher()" *ngIf="watching">
       <div class="container">
@@ -66,9 +71,13 @@
           <p><strong>Main/Spinoffs:</strong> The main, and spinoff, series are available on plenty of streaming platforms including: <a href="https://www.bbc.co.uk/iplayer" target="_blank">BBC iPlayer</a>, <a href="https://www.bbcamerica.com/" target="_blank">BBC America</a>, <a href="https://www.britbox.com/" target="_blank">BritBox</a>, <a href="https://www.amazon.com/gp/video/getstarted/" target="_blank">Prime Video</a>, <a href="https://www.hbomax.com/" target="_blank">HBO Max</a>, <a href="https://tv.youtube.com/welcome/" target="_blank">YouTube TV</a>, <a href="https://tv.apple.com/" target="_blank">Apple TV</a>, <a href="https://www.vudu.com/" target="_blank">Vudu</a> and <a href="https://www.google.com/search?q=where+to+watch+doctor+who" target="_blank">more</a>...</p>
           <p><strong>Extras:</strong> The minisodes, web casts, animations, and other extra content produced for Doctor Who are readily available online as this was how they were released...</p>
           <p><strong>Other Formats:</strong> While it is convenient to stream Doctor Who, you do not have to as most of the content can be purchased as physical media. Also, a few classic Doctor Who episodes can be legally downloaded through torrents (the BBC was testing video distribution through P2P technologies)...</p>
-          <button id="close">✖</button>
+          <button>✖</button>
         </div>
       </div>
     </div>
+
+    <button class="close" (click)="close()">
+      <strong>CLOSE</strong>
+    </button>
   </div>
 </main>

@@ -10,6 +10,10 @@ async function handleRequest(request, epoch) {
 			'status': 200
 		}
 	};
+	
+	if (request.method != 'GET') {
+		return new Response(JSON.stringify('Invalid protocol used...'), respond);
+	}
 
 	const { searchParams } = new URL(request.url);
 
@@ -1117,22 +1121,35 @@ async function handleRequest(request, epoch) {
 				return new Response(message(true, 'No type ID included'), respond);
 			}
 
+			if (searchParams.get('state') == null) {
+				return new Response(message(true, 'No state included'), respond);
+			}
+
 			let visible = JSON.parse(await kv.get(searchParams.get('list')));
 
 			if (visible === null) {
 				return new Response(message(true, 'List ID does not exist'), respond);
 			}
 
-			if (visible.meta.visible.includes(searchParams.get('type'))) {
-				const index = visible.meta.visible.indexOf(searchParams.get('type'));
-				visible.meta.visible.splice(index, 1);
-			} else {
+			if (searchParams.get('state') == 'enable') {
 				visible.meta.visible.push(searchParams.get('type'));
+
+				await kv.put(searchParams.get('list'), JSON.stringify(visible));
+
+				return new Response(message(false, 'Enabled ' + searchParams.get('type')), respond);
+			} else {
+				let temporary = [];
+
+				for (let item in visible.meta.visible) {
+					if (item != searchParams.get('type')) { temporary.push(item) }
+				}
+
+				visible.meta.visible = temporary;
+
+				await kv.put(searchParams.get('list'), JSON.stringify(visible));
+
+				return new Response(message(false, 'Disabled ' + searchParams.get('type')), respond);
 			}
-
-			await kv.put(searchParams.get('list'), JSON.stringify(visible));
-
-			return new Response(message(false, 'Visible content updated'), respond);
 		case 'watched':
 			if (searchParams.get('list') == null) {
 				return new Response(message(true, 'No list ID included'), respond);
@@ -1160,6 +1177,14 @@ async function handleRequest(request, epoch) {
 			await kv.put(searchParams.get('list'), JSON.stringify(watched));
 
 			return new Response(message(false, 'Viewing status updated'), respond);
+		case 'delete':
+			if (searchParams.get('list') == null) {
+				return new Response(message(true, 'No list ID included'), respond);
+			}
+
+			await kv.delete(searchParams.get('list'));
+
+			return new Response(message(false, 'Deleted watch list'), respond);
 		default:
 			return new Response(message(true, 'Invalid operator included'), respond);
 	}
@@ -1168,11 +1193,13 @@ async function handleRequest(request, epoch) {
 function message(error, message) {
 	let epoch = error ? 0 : 1;
 	let response = {
-		"meta": {
-			"unique": message,
-			"epoch": epoch,
-			"visible": []
-		}, "data": {
+		'meta': {
+			'unique': message,
+			'epoch': epoch,
+			'visible': [
+				Math.random().toString(36).substr(2, 5).split('').map(c => Math.random() < 0.5 ? c.toUpperCase() : c).join('')
+			]
+		}, 'data': {
 
 		}
 	};
