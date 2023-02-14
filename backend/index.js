@@ -782,7 +782,7 @@ async function handleRequest(request, epoch) {
 						"Doctor Who: Tardisode 9": {"type": "minisode", "status": 0},
 						"Doctor Who: Season 2: The Satan Pit": {"type": "modern_seasons", "status": 0},
 						"Doctor Who: Tardisode 10": {"type": "minisode", "status": 0},
-						"Doctor Who: Season 2: Love & Monsters": {"type": "modern_seasons", "status": 0},
+						"Doctor Who: Season 2: Love and Monsters": {"type": "modern_seasons", "status": 0},
 						"Doctor Who: Tardisode 11": {"type": "minisode", "status": 0},
 						"Doctor Who: Season 2: Fear Her": {"type": "modern_seasons", "status": 0},
 						"Doctor Who: Tardisode 12": {"type": "minisode", "status": 0},
