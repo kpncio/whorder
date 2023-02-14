@@ -63,6 +63,10 @@
       <button class="delete" (click)="delete()">Delete List</button>
     </div>
   
+    <button class="close" (click)="close()" *ngIf="!watching">
+      <strong>CLOSE</strong>
+    </button>
+
     <div class="shade" (click)="watcher()" *ngIf="watching">
       <div class="container">
         <div class="modal">
@@ -75,9 +79,5 @@
         </div>
       </div>
     </div>
-
-    <button class="close" (click)="close()">
-      <strong>CLOSE</strong>
-    </button>
   </div>
 </main>
