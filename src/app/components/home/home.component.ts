@@ -72,12 +72,10 @@ export class HomeComponent implements OnInit {
       if (this.local!.meta.visible.includes(content)) {
         const index = this.local!.meta.visible.indexOf(content);
         this.local!.meta.visible.splice(index, 1);
-  
         
         this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content + '&state=disable');
       } else {
         this.local!.meta.visible.push(content);
-  
         
         this.retrieval('https://api.whorder.com/?operation=visible&list=' + this.unique + '&type=' + content + '&state=enable');
       }
