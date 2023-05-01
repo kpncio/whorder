@@ -6,7 +6,7 @@
 </h1>
 
 <main class="container">
-  <h2 class="nosel">Watch Order:</h2>
+  <h2 class="nosel">Watch Order: {{unique}}</h2>
   <h3 class="nosel">⤷ <a (click)="routerLink(['/information'])">See more</a>...</h3>
   
   <p class="message" [ngClass]="{'fail': !success, 'succ': success}" *ngIf="message">{{message}}</p>
@@ -38,7 +38,7 @@
       <table>
         <thead class="nosel">
           <tr>
-            <th>ℹ</th>
+            <!-- <th>ℹ</th> -->
             <th>✓</th>
             <th>Watch</th>
             <th>Viewed</th>
@@ -47,7 +47,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let array of arrayed">
-            <td class="nosel back-blue" (click)="watcher(array[0])">ℹ</td>
+            <!-- <td class="nosel back-blue" (click)="watcher(array[0])">ℹ</td> -->
             <td class="nosel" (click)="viewer(array[0])" [ngClass]="{'back-green': array[2] == 1, 'back-yellow': array[2] == 2 }">
               <span *ngIf="array[2] == 1">✓</span>
               <span *ngIf="array[2] == 2">★</span>
