@@ -8,6 +8,10 @@
   letter-spacing: normal;
 }
 
+.left {
+  text-align: left !important;
+}
+
 .succ {
   border: 1px $green solid;
   background-color: $greenen;
@@ -410,7 +414,7 @@ table {
   left: 50%;
   padding: 20px;
   position: fixed;
-  text-align: left;
+  text-align: center;
   max-width: 1200px;
   border-radius: 10px;
   background-color: $dark;
@@ -421,6 +425,11 @@ table {
 
   h2 {
     text-align: center;
+  }
+
+  h5 {
+    font-size: 36pt;
+    font-family: monospace;
   }
 
   a {

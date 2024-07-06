@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
   watching: boolean = false;
   loading: boolean = false;
   success: boolean = false;
+  warning: boolean = true;
   watched: string[] = [];
   message: string = '';
   unique: string = '';
@@ -57,6 +58,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('unique') != null) {
+      this.warning = (localStorage.getItem('warning') == "true");
+  
       this.unique = localStorage.getItem('unique')!;
 
       this.retrieval('https://api.whorder.com/?operation=read&list=' + this.unique);
@@ -156,10 +159,13 @@ export class HomeComponent implements OnInit {
 
   creator(): void {
     this.retrieval('https://api.whorder.com/?operation=create');
+
+    setTimeout(() => { location.reload(); }, 1000);
   }
 
   close(reload: boolean = true): void {
     localStorage.removeItem('unique');
+    localStorage.removeItem('warning');
     localStorage.clear();
 
     if (reload) { location.reload(); }
@@ -169,9 +175,16 @@ export class HomeComponent implements OnInit {
     this.retrieval('https://api.whorder.com/?operation=delete&list=' + this.unique);
 
     localStorage.removeItem('unique');
+    localStorage.removeItem('warning');
     localStorage.clear();
 
-    location.reload();
+    setTimeout(() => { location.reload(); }, 1000);
+  }
+
+  warned(): void {
+    localStorage.setItem('warning', "true");
+
+    this.warning = true;
   }
 
   retrieval(url: string): void {

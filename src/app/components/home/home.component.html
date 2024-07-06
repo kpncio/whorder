@@ -42,7 +42,7 @@
             <th>✓</th>
             <th>Watch</th>
             <th>Viewed</th>
-            <th>Title</th>
+            <th class="left">Title</th>
           </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@
               <span *ngIf="array[2] == 1">✓</span>
               <span *ngIf="array[2] == 2">★</span>
             </td>
-            <td>{{array[0]}}</td>
+            <td class="left">{{array[0]}}</td>
           </tr>
         </tbody>
       </table>
@@ -76,6 +76,18 @@
           <p><strong>Extras:</strong> The minisodes, web casts, animations, and other extra content produced for Doctor Who are readily available online as this was how they were released...</p>
           <p><strong>Other Formats:</strong> While it is convenient to stream Doctor Who, you do not have to as most of the content can be purchased as physical media. Also, a few classic Doctor Who episodes can be legally downloaded through torrents (the BBC was testing video distribution through P2P technologies)...</p>
           <button>✖</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="shade" (click)="warned()" *ngIf="!warning">
+      <div class="container">
+        <div class="modal">
+          <h2>LIST CODE WARNING</h2>
+          <p><strong>Info:</strong> When creating a new list a random code is generated - identifying your specific list. Make sure you save this code somewhere for later access. You will need this code if you want to access the list through a different browser or another device. Your browser (or other utilities) may wipe your browser's local storage and your code with it.</p>
+          <p><strong>Please:</strong> Save your following code (case-sensitive) in a text document, piece of paper, or even a text chat...</p>
+          <h5><strong>{{unique}}</strong></h5>
+          <small>(click anywhere to dismiss)</small>
         </div>
       </div>
     </div>
